@@ -1,21 +1,40 @@
-// [Template no Kotlin Playground](https://pl.kotl.in/WcteahpyN)
+class Usuario(val name: String, val email: String) {
+    // Additional properties and methods can be added here
+}
 
-enum class Nivel { BASICO, INTERMEDIARIO, DIFICIL }
+data class ConteudoEducacional(var nome: String, val duracao: Int = 60) {
+    // Additional properties and methods can be added here
+}
 
-class Usuario
-
-data class ConteudoEducacional(var nome: String, val duracao: Int = 60)
-
-data class Formacao(val nome: String, var conteudos: List<ConteudoEducacional>) {
-
+class Formacao(val nome: String, var conteudos: List<ConteudoEducacional>) {
     val inscritos = mutableListOf<Usuario>()
     
+    /**
+     * Enrolls a user in the formation.
+     * @param usuario The user to be enrolled.
+     */
     fun matricular(usuario: Usuario) {
-        TODO("Utilize o parâmetro $usuario para simular uma matrícula (usar a lista de $inscritos).")
+        if (!inscritos.contains(usuario)) {
+            inscritos.add(usuario)
+            println("${usuario.name} foi matriculado na formação $nome.")
+        } else {
+            println("${usuario.name} já está matriculado na formação $nome.")
+        }
     }
 }
 
 fun main() {
-    TODO("Analise as classes modeladas para este domínio de aplicação e pense em formas de evoluí-las.")
-    TODO("Simule alguns cenários de teste. Para isso, crie alguns objetos usando as classes em questão.")
+    val usuario1 = Usuario("Lucas", "Lucas@gmail.com")
+    val usuario2 = Usuario("Roberto", "Rberto@gmail.com")
+    
+    val conteudo1 = ConteudoEducacional("Introdução à Programação", 120)
+    val conteudo2 = ConteudoEducacional("Algoritmos Avançados", 180)
+    
+    val formacao = Formacao("Ciência da Computação", listOf(conteudo1, conteudo2))
+    
+    formacao.matricular(usuario1)
+    formacao.matricular(usuario2)
+    formacao.matricular(usuario1) // Trying to enroll the same user again
+    
+    println("Inscritos na formação ${formacao.nome}: ${formacao.inscritos.joinToString(", ") { it.name }}")
 }
